@@ -12,25 +12,26 @@
 <body>
 		
 		<div class="container">
-		<h1>Pizzas For Parties</h1>
+		<h1>Search For Parties</h1>
 		
 	<form class="form-inline" action="/vote">
 	  <label class="sr-only" for="inlineFormInputName2">Pizza Type</label>
-	  <input name="neededCapacity" type="number" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Needed Capacity">
+	  <input name="name" type="number" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Party Name">
 	   
 	   <label class="sr-only" for="inlineFormInputName2">Pizza Type</label>
-	  <input name="neededCapacity" type="number" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Needed Capacity">
+	  <input name="description" type="number" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Party Date">
 	
 	  <div class="form-check mb-2 mr-sm-2">
 	    <input name="onlyShowAvailable" value="true" class="form-check-input" type="checkbox" id="inlineFormCheck">
 	    <label class="form-check-label" for="inlineFormCheck">
-	      Only show available
+	      
 	    </label>
 	  </div>
 	
 	  <button type="submit" class="btn btn-primary mb-2">Submit</button>
 	</form>
 		
+		<form method="post" action="/votes">
 		<table class="table">
 			<thead>
 				<tr>
@@ -39,15 +40,22 @@
 			</thead>
 			<tbody>
 				<c:forEach var="pizza" items="${pizza }">
-				<tr>
+				
+				<tr>				
 					<td><a href="/detail?id=${pizza.id}">${pizza.name}</a></td>
 					<td>${pizza.description }</td>
 					<td>${pizza.votes }</td>
+					<td>
+					<a href="
+					<c:url value="/votes/${pizza.id}" />
+					" class="btn btn-secondary">Vote!</a> </td>
 				</tr>
 				</c:forEach>
+				
 			</tbody>
 		</table>
-		<a href="/rooms/add" class="btn btn-secondary">Add Room</a>
+		</form>
+		<a href="/add" class="btn btn-secondary">Add Pizza</a>
 	</div>	
 		
 		

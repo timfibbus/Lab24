@@ -1,6 +1,5 @@
 package co.timfibbus.pizzaparty;
 
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,21 +18,11 @@ public class Pizza {
 	private String name;
 	private String description;
 	private Integer votes;
-	@ManyToOne
-	private Party party;
 
 	
 	public Pizza(){	
 	}
 	
-	public Pizza(Long id, String name, String description, Integer votes, Party party) {
-		super();
-		this.id=id;
-		this.name=name;
-		this.description=description;
-		this.votes=votes;
-		this.party=party;
-	}
 
 	public Long getId() {
 		return id;

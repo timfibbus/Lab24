@@ -1,5 +1,6 @@
 package co.timfibbus.pizzaparty;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -10,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
-
 @Entity
 public class Party {
 	
@@ -19,12 +18,20 @@ public class Party {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private Date date;
+	private LocalDate date;
 	@OneToMany(mappedBy="party")
-	private Set<Pizza> pizzas;
+	private Set<Rsvp> rsvps;
 	
 	public Party() {
 		
+	}
+
+	public Set<Rsvp> getRsvps() {
+		return rsvps;
+	}
+
+	public void setRsvps(Set<Rsvp> rsvps) {
+		this.rsvps = rsvps;
 	}
 
 	public Long getId() {
@@ -43,11 +50,11 @@ public class Party {
 		this.name = name;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
@@ -56,5 +63,4 @@ public class Party {
 		return "Party [id=" + id + ", name=" + name + ", date=" + date + "]";
 	}
 		
-	
 }

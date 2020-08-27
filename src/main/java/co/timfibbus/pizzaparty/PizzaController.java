@@ -39,14 +39,14 @@ public class PizzaController {
 		model.addAttribute("parties", parties);
 		return "add";
 	}
-	@PostMapping("/add")
+	@PostMapping("/add-submit")
 	public String adder(Pizza pizza) {
 		System.out.println(pizza.toString());
 		pizzaDao.save(pizza);
 		return "redirect:/";
 	}
-	
-	@RequestMapping("/votes/{id}")
+	/*
+	@RequestMapping("/votes")
 	public String showVotes(@PathVariable("id")Pizza pizza) {
 		
 		int i = pizza.getVotes();
@@ -54,14 +54,17 @@ public class PizzaController {
 		pizza.setVotes(i);
 		System.out.println(pizza.toString());
 		pizzaDao.save(pizza);
-		return "votes";
+		return "votes/{id}";
 	}
-	
-	@RequestMapping("/votes")
-	public String showVotes(Model model){
-		List<Pizza> pizzas = pizzaDao.findAll();
-		model.addAttribute("pizzas", pizzas);
-		return "votes";
+	*/
+	@RequestMapping("/votes/{id}")
+	public String showVotes(@PathVariable("id")Pizza pizza, Model model){
+		int i = pizza.getVotes();
+		i++;
+		pizza.setVotes(i);
+		System.out.println(pizza.toString());
+		pizzaDao.save(pizza);
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/review")
@@ -74,5 +77,23 @@ public class PizzaController {
 		Pizza pizza = pizzaDao.findById(id).get();
 		model.addAttribute("pizza", pizza);
 		return "detail";
+	}
+	
+	@RequestMapping("/")
+	public String partyLife() {
+		List<Party> partyz = partyDao.findAll();
+		return "party";
+		
+	}
+	
+	@RequestMapping("/party/{id}")
+	public String rsvps() {
+		
+		
+	}
+	
+	@RequestMapping("/rsvp")
+	public String rsvp() {
+		
 	}
 }

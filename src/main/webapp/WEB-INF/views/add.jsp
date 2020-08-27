@@ -18,21 +18,11 @@
 	<div class="container">
 		<h2>Create Pizza</h2>
 
-		<form method="post">
+		<form method="post" action="/add-submit">
 			<label>Name</label> <input type="text" required name="name">
 			<label>Description</label> <input type="text" required name="description">
-			<label><input type="number" name="votes" /></label>
+			<label>Votes<input type="number" name="votes" /></label>
 			<div>
-				<label>Party</label> 
-				<select name="party">
-					<c:forEach var="party" items="${parties}">
-
-						<option name="party_id" value="${party.id}">
-						<c:out value="${party.name}" />
-						</option>
-
-					</c:forEach>
-				</select>
 			</div>
 
 			<button type="submit" class="btn btn-warning">Create</button>

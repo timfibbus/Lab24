@@ -1,6 +1,8 @@
 package co.timfibbus.pizzaparty;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,20 +17,17 @@ import co.timfibbus.pizzaparty.PartyDao;
 
 @Controller
 public class PizzaController {
-	
 	@Autowired
 	private PizzaDao pizzaDao;
 	
 	@Autowired
 	private PartyDao partyDao;
-	
-	@RequestMapping("/")
-	public String home(Model model) {
 		
+	@RequestMapping("/pizza")
+	public String home(Model model) {	
 		List<Pizza> pizza = pizzaDao.findAll();
-		model.addAttribute("pizza", pizza);
-		
-		return "home";
+		model.addAttribute("pizza", pizza);	
+		return "pizza";
 	}
 	
 	@RequestMapping("/add")
@@ -45,18 +44,7 @@ public class PizzaController {
 		pizzaDao.save(pizza);
 		return "redirect:/";
 	}
-	/*
-	@RequestMapping("/votes")
-	public String showVotes(@PathVariable("id")Pizza pizza) {
-		
-		int i = pizza.getVotes();
-		i++;
-		pizza.setVotes(i);
-		System.out.println(pizza.toString());
-		pizzaDao.save(pizza);
-		return "votes/{id}";
-	}
-	*/
+
 	@RequestMapping("/votes/{id}")
 	public String showVotes(@PathVariable("id")Pizza pizza, Model model){
 		int i = pizza.getVotes();
@@ -80,20 +68,40 @@ public class PizzaController {
 	}
 	
 	@RequestMapping("/")
-	public String partyLife() {
+	public String partyLife(Model model) {
 		List<Party> partyz = partyDao.findAll();
-		return "party";
 		
+		model.addAttribute("partyz", partyz);
+		return "party";		
+	}
+
+	
+	@RequestMapping("/detail/{id}")
+	public String rsvps(@PathVariable("id")Party party, Model model) {
+		Set<Rsvp> rsvps = party.getRsvps();
+		model.addAttribute("rsvps", rsvps);
+		return "rsvp";
 	}
 	
-	@RequestMapping("/party/{id}")
-	public String rsvps() {
-		
-		
+	@PostMapping("/rsvp")
+	public String rsvpay(Model model,Long id) {
+		model.addAttribute("id", id);
+		return "/rvsp/?=id";
 	}
 	
-	@RequestMapping("/rsvp")
+	@PostMapping("/rsvp/{id}")
+	public String rsvpAdder(@PathVariable("id")Rsvp rsvp, Model model, Party party) {
+		Set<Rsvp> rsvps = party.getRsvps();
+		rsvps.add(rsvp);
+		party.setRsvps(rsvps);
+		partyDao.save(party);
+	
+		return "redirect:/";
+	}
+	
+	@PostMapping("/add-rsvp")
 	public String rsvp() {
 		
+		return "redirect:/";
 	}
 }
